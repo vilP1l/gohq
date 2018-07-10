@@ -78,6 +78,22 @@ func (g *Game) Life(qID, gID string) error {
 	return g.Conn.WriteMessage(websocket.TextMessage, bytes)
 }
 
+// Use a life on an a question
+func (g *Game) Chat(message, gID string) error {
+	type Data struct {
+		Type        string `json:"type"`
+		BroadcastID string `json:"broadcastId"`
+		Message     string `json:"message"`
+	}
+
+	bytes, err := json.Marshal(Data{Type: "interaction", BroadcastID: gID, Message: message})
+	if err != nil {
+		return err
+	}
+
+	return g.Conn.WriteMessage(websocket.TextMessage, bytes)
+}
+
 // Parse broadcast statistics
 func (g *Game) ParseBroadcastStats(bytes []byte) (stats *BroadcastStats) {
 	json.Unmarshal(bytes, &stats)
