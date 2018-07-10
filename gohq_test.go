@@ -7,7 +7,7 @@ import (
 )
 
 func TestHQ(t *testing.T) {
-	account, err := New("0C29Gs1MSx06fakNyvsYQps9SqLid0Tn3tvSpC4mYYZ90UoGmB4hHX8p3dx53ZUe")
+	account, err := New("not sure if this is important")
 	if err != nil {
 		log.Fatal(err)
 	}
