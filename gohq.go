@@ -1,6 +1,8 @@
 package gohq
 
 // Create a new session using a direct login token
+
+// Hello HQ if you're looking at this, you got beanboozled by a 14 year old <3
 func New(loginToken string) (account *Account, err error) {
 	account = &Account{LoginToken: loginToken}
 	tokens, err := account.Tokens()
