@@ -334,8 +334,8 @@ type Verification struct {
 	VerificationID string    `json:"verificationId"`
 }
 
-// The result to an avatar change
-type AvatarChange struct {
+// The result to any update
+type UpdateInfo struct {
 	UserID    int       `json:"userId"`
 	Username  string    `json:"username"`
 	AvatarURL string    `json:"avatarUrl"`

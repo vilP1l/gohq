@@ -214,6 +214,23 @@ func (a *Account) Weekly() (err error) {
 	return
 }
 
+// ChangeUsername changes a users username
+func (a *Account) ChangeUsername(username string) (ud *UpdateInfo, err error) {
+	type Data struct {
+		Username string `json:"username"`
+	}
+
+	resp, err := a.Request("PATCH", EndpointMe, Data{Username:username}, true)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(resp, &ud)
+
+	return
+}
+
+
 // SearchUser searches for a user
 func (a *Account) SearchUser(username string) (sd *SearchData, err error) {
 	type Data struct {
@@ -276,7 +293,7 @@ func (aws *AWSSession) Upload(filename string, data []byte) (err error) {
 }
 
 // Change the profile picture to a profile picture on the AWS path
-func (a *Account) ChangeAvatar(awsPath string) (result *AvatarChange, err error) {
+func (a *Account) ChangeAvatar(awsPath string) (result *UpdateInfo, err error) {
 	type Data struct {
 		AvatarURL string `json:"avatarUrl"`
 	}
