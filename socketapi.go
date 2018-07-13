@@ -102,6 +102,8 @@ func (g *Game) ParseBroadcastStats(bytes []byte) (stats *BroadcastStats) {
 		return stats
 	}
 
+	stats = nil
+
 	return
 }
 
@@ -110,8 +112,10 @@ func (g *Game) ParseQuestion(bytes []byte) (question *Question) {
 	json.Unmarshal(bytes, &question)
 
 	if question.Type == "question" && len(question.Answers) != 0 {
-		return question
+		return
 	}
+
+	question = nil
 
 	return
 }
@@ -121,8 +125,10 @@ func (g *Game) ParseQuestionSummary(bytes []byte) (questionSummary *QuestionSumm
 	json.Unmarshal(bytes, &questionSummary)
 
 	if questionSummary.Type == "questionSummary" {
-		return questionSummary
+		return
 	}
+
+	questionSummary = nil
 
 	return
 }
@@ -132,8 +138,10 @@ func (g *Game) ParseQuestionClosed(bytes []byte) (questionClosed *QuestionClosed
 	json.Unmarshal(bytes, &questionClosed)
 
 	if questionClosed.Type == "questionClosed" {
-		return questionClosed
+		return
 	}
+
+	questionClosed = nil
 
 	return
 }
@@ -143,8 +151,10 @@ func (g *Game) ParseQuestionFinished(bytes []byte) (questionFinished *QuestionFi
 	json.Unmarshal(bytes, &questionFinished)
 
 	if questionFinished.Type == "questionFinished" {
-		return questionFinished
+		return
 	}
+
+	questionFinished = nil
 
 	return
 }
@@ -154,8 +164,10 @@ func (g *Game) ParseChatMessage(bytes []byte) (chatMessage *ChatMessage) {
 	json.Unmarshal(bytes, &chatMessage)
 
 	if chatMessage.Type == "interaction" && chatMessage.ItemID == "chat" {
-		return chatMessage
+		return
 	}
+
+	chatMessage = nil
 
 	return
 }
@@ -167,6 +179,8 @@ func (g *Game) ParseGameStatus(bytes []byte) (gameStatus *GameStatus) {
 	if gameStatus.Type == "gameStatus" {
 		return gameStatus
 	}
+
+	gameStatus = nil
 
 	return
 }
