@@ -181,10 +181,7 @@ func (a *Account) Cashout(email string) (cd *CashoutData, err error) {
 
 // Payouts gets all of the past payout data
 func (a *Account) Payouts() (pd *PayoutData, err error) {
-	type Data struct {
-	}
-
-	resp, err := a.Request("GET", EndpointMe, Data{}, true)
+	resp, err := a.Request("GET", EndpointMe, nil, true)
 	if err != nil {
 		return
 	}
@@ -196,10 +193,7 @@ func (a *Account) Payouts() (pd *PayoutData, err error) {
 
 // Schedule
 func (a *Account) Schedule() (sd *ScheduleData, err error) {
-	type Data struct {
-	}
-
-	resp, err := a.Request("GET", EndpointSchedule, Data{}, true)
+	resp, err := a.Request("GET", EndpointSchedule, nil, true)
 	if err != nil {
 		return
 	}
@@ -211,10 +205,7 @@ func (a *Account) Schedule() (sd *ScheduleData, err error) {
 
 // Weekly runs the makeItRain easter egg
 func (a *Account) Weekly() (err error) {
-	type Data struct {
-	}
-
-	if _, err = a.Request("GET", EndpointMe, Data{}, true); err != nil {
+	if _, err = a.Request("GET", EndpointMe, nil, true); err != nil {
 		return
 	}
 
@@ -269,7 +260,7 @@ func (a *Account) RequestAWS() (aws *AWSSession, err error) {
 		return
 	}
 
-	err = json.Unmarshal(resp, aws)
+	err = json.Unmarshal(resp, &aws)
 	return
 }
 
