@@ -169,7 +169,7 @@ func (a *Account) Cashout(email string) (cd *CashoutData, err error) {
 		Email string `json:"email"`
 	}
 
-	resp, err := a.Request("POST", EndpointMe, Data{Email: email}, true)
+	resp, err := a.Request("POST", EndpointPayouts, Data{Email: email}, true)
 	if err != nil {
 		return
 	}
@@ -181,7 +181,7 @@ func (a *Account) Cashout(email string) (cd *CashoutData, err error) {
 
 // Payouts gets all of the past payout data
 func (a *Account) Payouts() (pd *PayoutData, err error) {
-	resp, err := a.Request("GET", EndpointMe, nil, true)
+	resp, err := a.Request("GET", EndpointPayouts, nil, true)
 	if err != nil {
 		return
 	}
