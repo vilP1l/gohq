@@ -19,7 +19,13 @@ func (a *Account) Request(method string, urlStr string, data interface{}, auth b
 		return
 	}
 
-	req, err := http.NewRequest(method, urlStr, bytes.NewBuffer(dataBytes))
+	var req *http.Request
+	if data == nil {
+		req, err = http.NewRequest(method, urlStr, nil)
+	} else {
+		req, err = http.NewRequest(method, urlStr, bytes.NewBuffer(dataBytes))
+	}
+
 	if err != nil {
 		return
 	}
@@ -27,6 +33,7 @@ func (a *Account) Request(method string, urlStr string, data interface{}, auth b
 	if auth {
 		req.Header.Set("Authorization", "Bearer "+a.AccessToken)
 	}
+
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "hq-viewer/1.2.18 (iPhone; iOS 11.2.2; Scale/3.00)")
 	req.Header.Set("Content-Length", strconv.Itoa(len(dataBytes)))
@@ -220,7 +227,7 @@ func (a *Account) ChangeUsername(username string) (ud *UpdateInfo, err error) {
 		Username string `json:"username"`
 	}
 
-	resp, err := a.Request("PATCH", EndpointMe, Data{Username:username}, true)
+	resp, err := a.Request("PATCH", EndpointMe, Data{Username: username}, true)
 	if err != nil {
 		return
 	}
@@ -230,13 +237,9 @@ func (a *Account) ChangeUsername(username string) (ud *UpdateInfo, err error) {
 	return
 }
 
-
 // SearchUser searches for a user
 func (a *Account) SearchUser(username string) (sd *SearchData, err error) {
-	type Data struct {
-	}
-
-	resp, err := a.Request("GET", EndpointSearchUser(username), Data{}, true)
+	resp, err := a.Request("GET", EndpointSearchUser(username), nil, true)
 	if err != nil {
 		return
 	}
@@ -248,28 +251,19 @@ func (a *Account) SearchUser(username string) (sd *SearchData, err error) {
 
 // AddFriend adds a user by id
 func (a *Account) AddFriend(uID string) (err error) {
-	type Data struct {
-	}
-
-	_, err = a.Request("POST", EndpointFriendRequest(uID), Data{}, true)
+	_, err = a.Request("POST", EndpointFriendRequest(uID), nil, true)
 	return
 }
 
 // DeleteFriend removes a user from your friend list
 func (a *Account) DeleteFriend(uID string) (err error) {
-	type Data struct {
-	}
-
-	_, err = a.Request("DELETE", EndpointFriendRequest(uID), Data{}, true)
+	_, err = a.Request("DELETE", EndpointFriendRequest(uID), nil, true)
 	return
 }
 
 // Request an AWS session
 func (a *Account) RequestAWS() (aws *AWSSession, err error) {
-	type Data struct {
-	}
-
-	resp, err := a.Request("GET", EndpointAWS, Data{}, true)
+	resp, err := a.Request("GET", EndpointAWS, nil, true)
 
 	if err != nil {
 		return

@@ -22,6 +22,6 @@ var (
 
 	EndpointUser          = func(uID string) string { return EndpointUsers + uID + "/" }
 	EndpointFriend        = func(uID string) string { return EndpointFriends + uID + "/" }
-	EndpointFriendRequest = func(uID string) string { return EndpointFriend(uID) + "/requests/" }
+	EndpointFriendRequest = func(uID string) string { return EndpointFriend(uID) + "requests/" }
 	EndpointSearchUser    = func(query string) string { return EndpointUsers + "?q=" + url.QueryEscape(query) }
 )
