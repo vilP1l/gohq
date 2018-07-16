@@ -205,7 +205,7 @@ func (a *Account) Schedule() (sd *ScheduleData, err error) {
 
 // Weekly runs the makeItRain easter egg
 func (a *Account) Weekly() (err error) {
-	if _, err = a.Request("GET", EndpointMakeItRain, nil, true); err != nil {
+	if _, err = a.Request("POST", EndpointMakeItRain, nil, true); err != nil {
 		return
 	}
 
