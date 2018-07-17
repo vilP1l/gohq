@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"github.com/smartystreets/go-aws-auth"
 	"net/url"
+	"fmt"
 )
 
 // Request makes (GET/POST/PUT/PATCH/etc..) requests to the HQ API
@@ -179,6 +180,37 @@ func (a *Account) Cashout(email string) (cd *CashoutData, err error) {
 	return
 }
 
+// Cashout sends a cashout request to HQ
+func (a *Account) RequestDocuments(email, payout, country string) (err error) {
+	type Data struct {
+		Email string `json:"email"`
+		Payout string `json:"payoutEmail"`
+		Country string `json:"country"`
+	}
+
+	_, err = a.Request("POST", EndpointDocuments(strconv.Itoa(a.UserID)), Data{Email: email, Country:country, Payout:payout}, true)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+// Cashout sends a cashout request to HQ
+// TODO: Fix
+func (a *Account) RegisterDeviceToken(token string) (err error) {
+	type Data struct {
+		Token string `json:"token"`
+	}
+
+	_, err = a.Request("POST", EndpointDevices, Data{Token:token}, true)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
 // Payouts gets all of the past payout data
 func (a *Account) Payouts() (pd *PayoutData, err error) {
 	resp, err := a.Request("GET", EndpointPayouts, nil, true)
@@ -208,6 +240,30 @@ func (a *Account) Weekly() (err error) {
 	if _, err = a.Request("POST", EndpointMakeItRain, nil, true); err != nil {
 		return
 	}
+
+	return
+}
+
+// Logout and invalidate a bearer
+func (a *Account) RefreshLogin() (lt *LoginTokenResponse, err error) {
+	resp, err := a.Request("GET", EndpointToken, nil, true)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(resp, &lt)
+
+	return
+}
+
+// Claim a gift
+func (a *Account) Claim(gID string) (err error) {
+	resp, err := a.Request("POST", EndpointClaim(gID), nil, true)
+	if err != nil {
+		return
+	}
+
+	fmt.Println(string(resp))
 
 	return
 }
@@ -263,6 +319,8 @@ func (a *Account) RequestAWS() (aws *AWSSession, err error) {
 	err = json.Unmarshal(resp, &aws)
 	return
 }
+
+
 
 // Upload to AWS
 func (aws *AWSSession) Upload(filename string, data []byte) (err error) {

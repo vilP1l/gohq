@@ -312,6 +312,11 @@ type ChatMessage struct {
 	Sent time.Time `json:"sent"`
 }
 
+// LoginToken response
+type LoginTokenResponse struct {
+	LoginToken string `json:"loginToken"`
+}
+
 // Authentication information from logging in?
 type Auth struct {
 	Auth *Account `json:"auth,omitempty"`
