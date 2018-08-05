@@ -18,3 +18,6 @@
 ## Usage
 
 No actual documentation yet, but you can check out the examples I've provided [here](https://github.com/discoli/gohq/blob/master/gohq_test.go)!
+
+
+~~Byte was here~~
