@@ -63,7 +63,7 @@ type Me struct {
 		SharingEnabled bool `json:"sharingEnabled"`
 	} `json:"preferences"`
 	FriendIds []int  `json:"friendIds"`
-	Lives     string `json:"lives"`
+	Lives     int `json:"lives"`
 	Stk       string `json:"stk"`
 	Leaderboard struct {
 		TotalCents int    `json:"totalCents"`

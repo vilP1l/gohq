@@ -17,7 +17,7 @@ func TestHQ(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Lives: " + me.Lives)
+	fmt.Println("Lives: " + mt.Sprintf("%v", me.Lives))
 
 	users, err := account.SearchUser("RedSinclair")
 	if err != nil {
