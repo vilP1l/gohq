@@ -36,7 +36,7 @@ func (a *Account) Request(method string, urlStr string, data interface{}, auth b
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "hq-viewer/1.2.18 (iPhone; iOS 11.2.2; Scale/3.00)")
+	req.Header.Set("User-Agent", "hq-viewer/1.4.14 (iPhone; iOS 11.2.2; Scale/3.00)")
 	req.Header.Set("Content-Length", strconv.Itoa(len(dataBytes)))
 
 	resp, err := http.DefaultClient.Do(req)
